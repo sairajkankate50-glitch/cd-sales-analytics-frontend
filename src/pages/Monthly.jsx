@@ -8,7 +8,7 @@ const Monthly = () => {
 
   const fetchData = async () => {
     try {
-      const res = await API.get("/analytics");
+      const res = await API.get("/sales");
       setData(res.data);
       console.log("Graph Data:", res.data);
     } catch (error) {
