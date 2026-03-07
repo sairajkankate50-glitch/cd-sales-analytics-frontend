@@ -1,34 +1,59 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../services/api.js";
 import Navbar from "../component/Navbar.jsx";
 import Sidebar from "../component/Sidebar.jsx";
 import StatCard from "../component/StatCard.jsx";
 
 const Dashboard = () => {
-
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");   // ✅ search state
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  // Fetch analytics data
-  const fetchData = async () => {
-    try {
-      const res = await API.get("/analytics");
-      setData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const API_URL = "https://sales-analytics-backend-dfnv.onrender.com";
+
+  // Fetch data
+  const fetchData = () => {
+    fetch(`${API_URL}/sales`)
+      .then((res) => res.json())
+      .then((result) => setData(result))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Delete single item
+  const deleteItem = async (id) => {
+    try {
+      await fetch(`${API_URL}/sales/${id}`, {
+        method: "DELETE",
+      });
+
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Reset all data
+  const resetData = async () => {
+    try {
+      await fetch(`${API_URL}/sales`, {
+        method: "DELETE",
+      });
+
+      setData([]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Calculations
   const totalProducts = data.reduce((sum, item) => sum + item.quantity, 0);
   const totalRevenue = data.reduce((sum, item) => sum + item.revenue, 0);
   const totalTransactions = data.length;
+
   const avgRevenue = totalTransactions
     ? (totalRevenue / totalTransactions).toFixed(2)
     : 0;
@@ -38,36 +63,14 @@ const Dashboard = () => {
     item.product.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Delete single item
-  const deleteItem = async (id) => {
-    try {
-      await API.delete(`/analytics/${id}`);
-      fetchData(); // reload table
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Reset all analytics
-  const resetData = async () => {
-    try {
-      await API.delete("/analytics");
-      setData([]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div style={{ display: "flex" }}>
-
       <Sidebar />
 
       <div style={{ flex: 1 }}>
         <Navbar />
 
         <div style={{ padding: "20px" }}>
-
           {/* Buttons */}
           <div style={{ marginBottom: "20px" }}>
             <button onClick={() => navigate("/add-data")}>
@@ -104,34 +107,44 @@ const Dashboard = () => {
               marginBottom: "15px",
               width: "250px",
               border: "1px solid #ccc",
-              borderRadius: "5px"
+              borderRadius: "5px",
             }}
           />
 
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
-
             <thead>
               <tr style={{ background: "#f3f4f6" }}>
-                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Month</th>
-                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Product</th>
-                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Qty</th>
-                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Revenue</th>
-                <th style={{ padding: "10px", border: "1px solid #ddd" }}>Actions</th>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+                  Month
+                </th>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+                  Product
+                </th>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+                  Qty
+                </th>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+                  Revenue
+                </th>
+                <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+                  Actions
+                </th>
               </tr>
             </thead>
 
             <tbody>
-
               {filteredData.length === 0 ? (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: "center", padding: "20px" }}>
+                  <td
+                    colSpan="5"
+                    style={{ textAlign: "center", padding: "20px" }}
+                  >
                     No sales data found
                   </td>
                 </tr>
               ) : (
                 filteredData.map((item) => (
                   <tr key={item._id}>
-
                     <td style={{ padding: "10px", border: "1px solid #ddd" }}>
                       {item.month}
                     </td>
@@ -151,30 +164,30 @@ const Dashboard = () => {
                     <td style={{ padding: "10px", border: "1px solid #ddd" }}>
                       <button
                         style={{ marginRight: "5px" }}
-                        onClick={() => alert("Edit feature coming soon")}
+                        onClick={() =>
+                          alert("Edit feature coming soon")
+                        }
                       >
                         ✏ Edit
                       </button>
 
                       <button
-                        style={{ background: "red", color: "white" }}
+                        style={{
+                          background: "red",
+                          color: "white",
+                        }}
                         onClick={() => deleteItem(item._id)}
                       >
                         🗑 Delete
                       </button>
                     </td>
-
                   </tr>
                 ))
               )}
-
             </tbody>
-
           </table>
-
         </div>
       </div>
-
     </div>
   );
 };
