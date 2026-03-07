@@ -1,0 +1,66 @@
+nav{
+background-color: blue;
+font-size: 2rem;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+input{
+    padding: 15px;
+    margin: 8px;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 3px 2px 2px rgba(0,0,0,0.3);
+}
+.inputsales{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button{
+    margin : 20px 20px;
+    background-color: orange;
+    padding: 15px;
+    margin: 8px;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 3px 2px 2px rgba(0,0,0,0.3);
+}
+
+.inputsales{
+    width: 350px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inputsales h3{
+    text-align: center;
+}
+
+.inputsales input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.inputsales button{
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.inputsales button:hover{
+    background: #1e4ed8;
+}

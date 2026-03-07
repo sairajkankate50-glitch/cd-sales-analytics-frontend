@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Login from "./Login.jsx";
+import AddData from "./pages/AddData.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import {Routes, Route} from "react-router-dom"
+import GraphPage from "./pages/GraphPage.jsx";
+import Piechart from "./pages/Piechart.jsx";
+import Monthly from "./pages/Monthly.jsx";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <>
+  <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/add-data" element={<AddData/>}/>
+      <Route path="/graph" element={<GraphPage/>} />
+      <Route path="/pie-chart" element={<Piechart/>} />
+      <Route path="/monthly" element={<Monthly/>} />
+    </Routes>
+    </>
   );
 }
 
