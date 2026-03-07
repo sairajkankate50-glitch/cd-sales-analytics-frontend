@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const API_URL = "https://sales-analytics-backend-dfnv.onrender.com";
+  const API_URL = "https://sales-analytics-backend-2.onrender.com";
 
   // Fetch data
   const fetchData = () => {
