@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   // Fetch data
   const fetchData = () => {
-    fetch(`${API_URL}/sales`)
+    fetch(`${API_URL}/api/analytics`)
       .then((res) => res.json())
       .then((result) => setData(result))
       .catch((err) => console.log(err));
@@ -26,7 +26,7 @@ const Dashboard = () => {
   // Delete single item
   const deleteItem = async (id) => {
     try {
-      await fetch(`${API_URL}/sales/${id}`, {
+      await fetch(`${API_URL}/api/analytics/${id}`, {
         method: "DELETE",
       });
 
@@ -39,7 +39,7 @@ const Dashboard = () => {
   // Reset all data
   const resetData = async () => {
     try {
-      await fetch(`${API_URL}/sales`, {
+      await fetch(`${API_URL}/api/analytics`, {
         method: "DELETE",
       });
 

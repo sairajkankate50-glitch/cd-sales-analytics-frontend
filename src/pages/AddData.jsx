@@ -15,7 +15,7 @@ const AddData = () => {
   const addData = async () => {
   try {
 
-    await API.post("/sales", {
+    await API.post("/api/analytics", {
       month,
       product,
       quantity: Number(quantity),
