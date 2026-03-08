@@ -8,7 +8,7 @@ const GraphPage = () => {
 
   const fetchData = async () => {
     try {
-      const res = await API.get("/sales");
+      const res = await API.get("/api/analytics");
       setData(res.data);
       console.log("Graph Data:", res.data);
     } catch (error) {
